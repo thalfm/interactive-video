@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgsql
+  labels:
+    app: pgsql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgsql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pgsql
+    spec:
+      containers:
+        - image: postgres:13.1
+          imagePullPolicy: Always
+          name: pgsql
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-pass
+                  key: password
+            - name: POSTGRES_DB
+              value: igti
+            - name: POSTGRES_USER
+              value: root
+            - name: PGDATA
+              value: /temp/data
+          ports:
+            - containerPort: 5432
+              name: pgsql
+          volumeMounts:
+            - name: pgsql-persistent-storage
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: pgsql-persistent-storage
+          persistentVolumeClaim:
+            claimName: pgsql-customer-pvc-claim

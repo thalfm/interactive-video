@@ -1,0 +1,52 @@
+version: "3.1"
+
+services:
+  cadastro-video-web:
+    build:
+      dockerfile: cadastro-video-web/Dockerfile
+      context: .
+    image: thalfm/cadastro-video-web
+    container_name: cadastro-video-web
+    volumes:
+      - ./cadastro-video-web/web:/opt/web
+      - ./cadastro-video-web/nginx/default:/etc/nginx/sites-available/default
+    ports:
+      - 8001:80
+      - 3000:3000
+    networks:
+      - cadastro-video
+
+  cadastro-video-api:
+    build:
+      dockerfile: cadastro-video-api/Dockerfile
+      context: .
+      args:
+        - WITH_XDEBUG=true
+    image: thalfm/cadastro-video-api
+    container_name: cadastro-video-api
+    volumes:
+      - ./cadastro-video-api/api:/opt/api
+      - ./cadastro-video-api/nginx/default:/etc/nginx/sites-available/default
+    ports:
+      - 8000:80
+    networks:
+      - cadastro-video
+
+  cadastro-video-pgsql:
+    image: postgres:13.1
+    container_name: cadastro-video-pgsql
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=igti
+      - PGDATA=/temp/data
+    volumes:
+      - .database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - cadastro-video
+
+networks:
+  cadastro-video:
+    driver: bridge

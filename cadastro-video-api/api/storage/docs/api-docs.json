@@ -1,0 +1,1202 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Laravel Generator APIs",
+        "version": "1.0.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/cursos": {
+            "get": {
+                "tags": [
+                    "Curso"
+                ],
+                "summary": "Get a listing of the Cursos.",
+                "description": "Get all Cursos",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Curso"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Curso"
+                ],
+                "summary": "Store a newly created Curso in storage",
+                "description": "Store Curso",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Curso that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Curso"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Curso"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/cursos/{id}": {
+            "get": {
+                "tags": [
+                    "Curso"
+                ],
+                "summary": "Display the specified Curso",
+                "description": "Get Curso",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Curso",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Curso"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Curso"
+                ],
+                "summary": "Update the specified Curso in storage",
+                "description": "Update Curso",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Curso",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Curso that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Curso"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Curso"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Curso"
+                ],
+                "summary": "Remove the specified Curso from storage",
+                "description": "Delete Curso",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Curso",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/perguntas": {
+            "get": {
+                "tags": [
+                    "Pergunta"
+                ],
+                "summary": "Get a listing of the Perguntas.",
+                "description": "Get all Perguntas",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Pergunta"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pergunta"
+                ],
+                "summary": "Store a newly created Pergunta in storage",
+                "description": "Store Pergunta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Pergunta that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Pergunta"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Pergunta"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/perguntas/{id}": {
+            "get": {
+                "tags": [
+                    "Pergunta"
+                ],
+                "summary": "Display the specified Pergunta",
+                "description": "Get Pergunta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Pergunta",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Pergunta"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Pergunta"
+                ],
+                "summary": "Update the specified Pergunta in storage",
+                "description": "Update Pergunta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Pergunta",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Pergunta that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Pergunta"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Pergunta"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pergunta"
+                ],
+                "summary": "Remove the specified Pergunta from storage",
+                "description": "Delete Pergunta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Pergunta",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/respostas": {
+            "get": {
+                "tags": [
+                    "Resposta"
+                ],
+                "summary": "Get a listing of the Respostas.",
+                "description": "Get all Respostas",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Resposta"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Resposta"
+                ],
+                "summary": "Store a newly created Resposta in storage",
+                "description": "Store Resposta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Resposta that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Resposta"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Resposta"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/respostas/{id}": {
+            "get": {
+                "tags": [
+                    "Resposta"
+                ],
+                "summary": "Display the specified Resposta",
+                "description": "Get Resposta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Resposta",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Resposta"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Resposta"
+                ],
+                "summary": "Update the specified Resposta in storage",
+                "description": "Update Resposta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Resposta",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Resposta that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Resposta"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Resposta"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Resposta"
+                ],
+                "summary": "Remove the specified Resposta from storage",
+                "description": "Delete Resposta",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Resposta",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Get a listing of the Usuarios.",
+                "description": "Get all Usuarios",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Usuario"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Store a newly created Usuario in storage",
+                "description": "Store Usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Usuario that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Usuario"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Display the specified Usuario",
+                "description": "Get Usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Usuario",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Usuario"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Update the specified Usuario in storage",
+                "description": "Update Usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Usuario",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Usuario that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Usuario"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Remove the specified Usuario from storage",
+                "description": "Delete Usuario",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Usuario",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/videos": {
+            "get": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Get a listing of the Videos.",
+                "description": "Get all Videos",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Video"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Store a newly created Video in storage",
+                "description": "Store Video",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Video that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Video"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Video"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/videos/{id}": {
+            "get": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Display the specified Video",
+                "description": "Get Video",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Video",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Video"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Update the specified Video in storage",
+                "description": "Update Video",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Video",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Video that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Video"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Video"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Video"
+                ],
+                "summary": "Remove the specified Video from storage",
+                "description": "Delete Video",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Video",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Curso": {
+            "required": [
+                "nome_curso",
+                "descricao_curso",
+                "imagem_curso",
+                "ativo",
+                "data_cadastro"
+            ],
+            "properties": {
+                "id_cursos": {
+                    "description": "Chave primaaria da tabela de Cursos",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "nome_curso": {
+                    "description": "Nome do curso, deve ser unico.",
+                    "type": "string"
+                },
+                "descricao_curso": {
+                    "description": "Descri\u00e7ao do curso, aqui sera inserido os detalhes do curso",
+                    "type": "string"
+                },
+                "imagem_curso": {
+                    "description": "Nome da imagem do curso que ira aparecer no catalogo",
+                    "type": "string"
+                },
+                "ativo": {
+                    "description": "Status do curso 1 = ativo 0 = inativo",
+                    "type": "boolean"
+                },
+                "data_cadastro": {
+                    "description": "Data de cadastro do curso",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "data_atualizacao": {
+                    "description": "Data de atualiza\u00e7ao do curso, esta coluna e sempre altera pela aplica\u00e7ao ao aterar os dados do curso",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Pergunta": {
+            "required": [
+                "descricao_pergunta",
+                "ativo",
+                "data_cadastro"
+            ],
+            "properties": {
+                "id_perguntas": {
+                    "description": "id_perguntas",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "descricao_pergunta": {
+                    "description": "Descri\u00e7ao da pergunta que aparece no video",
+                    "type": "string"
+                },
+                "ativo": {
+                    "description": "Status da pergunta 1 = ativo 0 = inativo",
+                    "type": "boolean"
+                },
+                "data_cadastro": {
+                    "description": "Data de cadastro da pergunta",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "data_atualizacao": {
+                    "description": "Data de atualizacao da pergunta, atualizada pelo sistema sempre que a pergunta tiver altera\u00e7ao",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Resposta": {
+            "required": [
+                "id_perguntas",
+                "descricao_resposta",
+                "correta",
+                "data_cadastro"
+            ],
+            "properties": {
+                "id_respostas": {
+                    "description": "Chave primaria da tabela de respostas",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "id_perguntas": {
+                    "description": "Chave estrangeira para tabela de perguntas, uma pergunta tem varias respostas",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "descricao_resposta": {
+                    "description": "Descri\u00e7\u00e3o da resposta",
+                    "type": "string"
+                },
+                "correta": {
+                    "description": "Resposta correta = 1 errada = 0",
+                    "type": "boolean"
+                },
+                "ativo": {
+                    "description": "Status da reposta 1 = ativo 0 = inativo ",
+                    "type": "boolean"
+                },
+                "data_cadastro": {
+                    "description": "Data de cadastro da resposta",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "data_atualizacao": {
+                    "description": "Data de atualiza\u00e7ao da resposta, atualizado pela aplica\u00e7ao sempre que a resposta for alterada",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Usuario": {
+            "required": [
+                "nome_usuario",
+                "email",
+                "senha",
+                "ativo",
+                "data_cadastro"
+            ],
+            "properties": {
+                "id_usuarios": {
+                    "description": "chave prmaria da tabela Usuarios",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "nome_usuario": {
+                    "description": "Nome completo do usuario",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "E-mail do usuario, tanbem utilizado para login ",
+                    "type": "string"
+                },
+                "senha": {
+                    "description": "senha do usuario criptografaga em bcrypt",
+                    "type": "string"
+                },
+                "ativo": {
+                    "description": "Status do usuario 1 = ativo 0 = inativo",
+                    "type": "boolean"
+                },
+                "data_cadastro": {
+                    "description": "Data de cadastro do usuario",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "data_atualizacao": {
+                    "description": "Data de atualiza\u00e7ao do usuario, esta coluna e sempre altera pela aplica\u00e7ao ao aterar os dados do usuario",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Video": {
+            "required": [
+                "titulo_video",
+                "nome_video",
+                "ativo",
+                "data_cadastro"
+            ],
+            "properties": {
+                "id_videos": {
+                    "description": "Chave primaria da tabela de videos",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "titulo_video": {
+                    "description": "Titulo do video",
+                    "type": "string"
+                },
+                "nome_video": {
+                    "description": "Nome do video, deve ser unico, gerado pela aplicacao como md5 do timestamp",
+                    "type": "string"
+                },
+                "ativo": {
+                    "description": "Status do video 1 = ativo 0 = inativo",
+                    "type": "boolean"
+                },
+                "data_cadastro": {
+                    "description": "data_cadastro",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "data_atualizacao": {
+                    "description": "data_atualizacao",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        }
+    }
+}

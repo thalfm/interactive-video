@@ -33,3 +33,12 @@ Route::get('/health', function () {
         ];
     }
 });
+
+Route::group(['prefix' => 'v1'], function () {
+    Route::resource('usuarios', App\Http\Controllers\API\UsuarioAPIController::class);
+    Route::resource('cursos', App\Http\Controllers\API\CursoAPIController::class);
+    Route::resource('videos', App\Http\Controllers\API\VideoAPIController::class);
+    Route::resource('perguntas', App\Http\Controllers\API\PerguntaAPIController::class);
+    Route::resource('respostas', App\Http\Controllers\API\RespostaAPIController::class);
+
+});

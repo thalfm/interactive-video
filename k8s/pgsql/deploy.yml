@@ -27,7 +27,7 @@ spec:
                   name: pgsql-pass
                   key: password
             - name: POSTGRES_DB
-              value: igti
+              value: interactive
             - name: POSTGRES_USER
               value: root
             - name: PGDATA

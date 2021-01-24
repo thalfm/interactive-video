@@ -38,7 +38,7 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=igti
+      - POSTGRES_DB=interactive
       - PGDATA=/temp/data
     volumes:
       - .database:/var/lib/postgresql/data

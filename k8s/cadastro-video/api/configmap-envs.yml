@@ -16,8 +16,9 @@ data:
        DB_CONNECTION=pgsql
        DB_HOST=pgsql-service
        DB_PORT=5432
-       DB_DATABASE=igti
+       DB_DATABASE=interactive
        DB_USERNAME=root
+       DB_PASSWORD=123456
 
        BROADCAST_DRIVER=log
        CACHE_DRIVER=file

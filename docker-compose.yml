@@ -1,40 +1,42 @@
 version: "3.1"
 
 services:
-  cadastro-video-web:
+  interactive-video-web:
     build:
-      dockerfile: cadastro-video-web/Dockerfile
-      context: .
-    image: thalfm/cadastro-video-web
-    container_name: cadastro-video-web
+      dockerfile: Dockerfile
+      context: ./interactive-video-web
+    image: thalfm/interactive-video-web
+    container_name: interactive-video-web
     volumes:
-      - ./cadastro-video-web/web:/opt/web
-      - ./cadastro-video-web/nginx/default:/etc/nginx/sites-available/default
+      - ./interactive-video-web/web:/opt/web
+      - ./interactive-video-web/nginx/default:/etc/nginx/sites-available/default
     ports:
       - 8001:80
       - 3000:3000
     networks:
-      - cadastro-video
+      - interactive-video
 
-  cadastro-video-api:
+  interactive-video-api:
     build:
-      dockerfile: cadastro-video-api/Dockerfile
-      context: .
+      dockerfile: Dockerfile
+      context: ./interactive-video-api
       args:
         - WITH_XDEBUG=true
-    image: thalfm/cadastro-video-api
-    container_name: cadastro-video-api
+    image: thalfm/interactive-video-api
+    container_name: interactive-video-api
     volumes:
-      - ./cadastro-video-api/api:/opt/api
-      - ./cadastro-video-api/nginx/default:/etc/nginx/sites-available/default
+      - ./interactive-video-api/api:/opt/api
+      - ./interactive-video-api/nginx/default:/etc/nginx/sites-available/default
     ports:
       - 8000:80
     networks:
-      - cadastro-video
+      - interactive-video
+    env_file:
+      - .env
 
-  cadastro-video-pgsql:
+  interactive-video-pgsql:
     image: postgres:13.1
-    container_name: cadastro-video-pgsql
+    container_name: interactive-video-pgsql
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=123456
@@ -45,8 +47,20 @@ services:
     ports:
       - 5432:5432
     networks:
-      - cadastro-video
-
+      - interactive-video
+  interactive-video-rabbitmq:
+    image: 'rabbitmq:3.8-management-alpine'
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - '.rabbitmq:/var/lib/rabbitmq/mnesia'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    networks:
+      - interactive-video
 networks:
-  cadastro-video:
+  interactive-video:
     driver: bridge

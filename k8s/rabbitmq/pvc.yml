@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pgsql-customer-pvc-claim
+  name: rabbitmq-customer-pvc-claim
   labels:
-    app: pgsql-customer-pvc-claim
+    app: rabbitmq-customer-pvc-claim
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 2Gi

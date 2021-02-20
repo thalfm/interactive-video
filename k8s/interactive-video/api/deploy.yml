@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interactive-video-api
+  labels:
+    app: interactive-video-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interactive-video-api
+  template:
+    metadata:
+      labels:
+        app: interactive-video-api
+    spec:
+      volumes:
+        - name: nginx-api-proxy-config
+          configMap:
+            name: interactive-video-api-nginx
+            items:
+              - key: default
+                path: default
+        - name: envs-api-config
+          configMap:
+            name: interactive-video-api-envs
+            items:
+              - key: env
+                path: .env
+      containers:
+        - name: interactive-video-api
+          image: "thalfm/interactive-video-api"
+          volumeMounts:
+            - name: nginx-api-proxy-config
+              mountPath: /etc/nginx/sites-available
+            - name: envs-api-config
+              subPath: .env
+              mountPath: /opt/api/.env
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-pass
+                  key: password
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2"

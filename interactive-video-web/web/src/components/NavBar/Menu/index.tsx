@@ -79,15 +79,17 @@ const Menu: React.FC<MenuProps> = (props) => {
                             <ListItem
                                 button
                                 key={key}
-                                onClick={() => navigateTo(route.path as string)}
+                                onClick={(route.path ? () => navigateTo(route.path as string) : () => {})}
                             >
                                 <div className={classes.iconDrawer}>
-                                    <Icon
-                                        color="primary"
-                                        fontSize={"large"}
-                                    >
-                                        {route.icon}
-                                    </Icon>
+                                    { route.icon && (
+                                        <Icon
+                                            color="primary"
+                                            fontSize={"large"}
+                                        >
+                                            {route.icon}
+                                        </Icon>
+                                    )}
                                 </div>
 
                                 <ListItemText primary={route.label}/>

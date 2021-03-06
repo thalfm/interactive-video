@@ -1,36 +1,39 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
+import { MUIDataTableColumn } from 'mui-datatables';
+import { Box, Fab, IconButton } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
+import RegisterQuestion from "./RegisterQuestion";
 import Page from "../../components/Page";
-import {Box, Fab, IconButton} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import Table from "../../components/Table";
+import { BadgeNo, BadgeYes } from "../../components/Badge";
 import FullModal from "../../components/FullModal";
-import RegisterCourse from "../Video/RegisterVideo";
-import {MUIDataTableColumn} from "mui-datatables";
-import {BadgeNo, BadgeYes} from "../../components/Badge";
-import EditIcon from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
-import httpVideosApi from "../../services/httpVideosApi";
-import VideosModel from "../../models/VideosModel";
+import Table from "../../components/Table";
+import httpQuestionsApi from "../../services/httpQuestionsApi";
+import QuestionsModel from "../../models/QuestionsModel";
 
-const Video: React.FC = () => {
-    const [open, setOpen] = useState(false);
+
+
+export const Questions = () => {
     const [id, setId] = useState(0);
-    const [videos, setVideos] = useState<VideosModel[]>([])
+    const [questions, setQuestions] = useState<QuestionsModel[]>([]);
+
 
     useEffect(() => {
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
+
 
     const fetchData = async () => {
-        const videosResult = await httpVideosApi().all()
+        const questionsResult = await httpQuestionsApi().all()
 
-        setVideos(videosResult)
+        setQuestions(questionsResult)
     }
 
     const columnsDefinition: MUIDataTableColumn[] = [
         {
-            name: 'titulo_video',
-            label: 'Título do vídeo'
+            name: 'descricao_pergunta',
+            label: 'Descrição'
         },
         {
             name: 'ativo',
@@ -42,7 +45,7 @@ const Video: React.FC = () => {
             }
         },
         {
-            name: 'id_videos',
+            name: 'id_perguntas',
             label: 'Opções',
             options: {
                 customBodyRender(value, tableMeta, updateValue) {
@@ -62,20 +65,24 @@ const Video: React.FC = () => {
         }
     ]
 
+    const [open, setOpen] = React.useState(false);
+
     const handleClickOpen = () => {
+        setId(0);
         setOpen(true);
     };
 
     const handleEdit = (value: number) => {
-        setId(value)
+        setId(value);
         setOpen(true);
     }
 
     const handleDelete = async (value: number) => {
         fetchData();
     }
+
     return (
-        <Page title={'Lista de videos'}>
+        <Page title="Lista de Perguntas">
             <Box dir="rtl" style={{
                 paddingBottom: 10
             }}>
@@ -85,9 +92,6 @@ const Video: React.FC = () => {
                     color="primary"
                     aria-label="adicionar"
                     onClick={handleClickOpen}
-                    classes={{
-                        primary: '#000'
-                    }}
                 >
                     <AddIcon />
                     Cadastrar
@@ -96,15 +100,14 @@ const Video: React.FC = () => {
 
             <Table
                 columns={columnsDefinition}
-                data={videos}
+                data={questions}
                 title=""
             />
 
-            <FullModal {...{ open, setOpen, title: `${id === 0 ? 'Cadastrar' : 'Editar'} Videos` ,onHandleClose:fetchData}}>
-                <RegisterCourse {...{ id, setId }} />
+            <FullModal {...{ open, setOpen, title: `${id === 0 ? 'Cadastrar' : 'Editar'} Pergunta` ,onHandleClose:fetchData}}>
+                <RegisterQuestion {...{ id, setId }} />
             </FullModal>
+
         </Page>
     );
-}
-
-export default Video;
+};

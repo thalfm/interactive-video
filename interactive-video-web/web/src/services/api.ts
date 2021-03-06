@@ -2,7 +2,7 @@ import axios from 'axios';
 import { TOKEN_KEY } from "./auth";
 
 const api = axios.create({
-    baseURL: "http://api.interactive-video/api"
+    baseURL: "http://localhost:8000/api/v1"
 });
 
 api.interceptors.request.use(async config => {

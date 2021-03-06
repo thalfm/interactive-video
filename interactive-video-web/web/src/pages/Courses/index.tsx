@@ -1,36 +1,40 @@
-import React, {useEffect, useState} from "react";
-import Page from "../../components/Page";
-import {Box, Fab, IconButton} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import Table from "../../components/Table";
-import FullModal from "../../components/FullModal";
-import RegisterCourse from "../Video/RegisterVideo";
-import {MUIDataTableColumn} from "mui-datatables";
-import {BadgeNo, BadgeYes} from "../../components/Badge";
-import EditIcon from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
-import httpVideosApi from "../../services/httpVideosApi";
-import VideosModel from "../../models/VideosModel";
+import React, {useEffect, useState} from "react"
+import Page from "../../components/Page"
+import {Box, Fab, IconButton} from "@material-ui/core"
+import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
+import Delete from '@material-ui/icons/Delete'
+import Table from "../../components/Table"
+import FullModal from "../../components/FullModal"
+import {BadgeNo, BadgeYes} from "../../components/Badge"
+import {MUIDataTableColumn} from "mui-datatables"
+import RegisterCourse from "./RegisterCourse"
+import httpCoursesApi from "../../services/httpCoursesApi"
+import CoursesModel from "../../models/CoursesModel"
 
-const Video: React.FC = () => {
-    const [open, setOpen] = useState(false);
-    const [id, setId] = useState(0);
-    const [videos, setVideos] = useState<VideosModel[]>([])
+const Courses: React.FC = () => {
+    const [open, setOpen] = useState(false)
+    const [id, setId] = useState(0)
+    const [courses, setCourses] = useState<CoursesModel[]>([])
 
     useEffect(() => {
         fetchData()
-    }, [])
+    },  [])
 
     const fetchData = async () => {
-        const videosResult = await httpVideosApi().all()
+        const coursesResult = await httpCoursesApi().all()
 
-        setVideos(videosResult)
+        setCourses(coursesResult)
     }
 
     const columnsDefinition: MUIDataTableColumn[] = [
         {
-            name: 'titulo_video',
-            label: 'Título do vídeo'
+            name: 'nome_curso',
+            label: 'Nome'
+        },
+        {
+            name: 'descricao_curso',
+            label: 'Descrição'
         },
         {
             name: 'ativo',
@@ -42,10 +46,11 @@ const Video: React.FC = () => {
             }
         },
         {
-            name: 'id_videos',
+            name: 'id_cursos',
             label: 'Opções',
             options: {
                 customBodyRender(value, tableMeta, updateValue) {
+                    console.log(value)
                     return (
                         <>
                             <IconButton onClick={() => handleEdit(value)}>
@@ -63,19 +68,20 @@ const Video: React.FC = () => {
     ]
 
     const handleClickOpen = () => {
-        setOpen(true);
-    };
+        setOpen(true)
+    }
 
     const handleEdit = (value: number) => {
         setId(value)
-        setOpen(true);
+        setOpen(true)
     }
 
     const handleDelete = async (value: number) => {
-        fetchData();
+        fetchData()
     }
+
     return (
-        <Page title={'Lista de videos'}>
+        <Page title={'Lista de cursos'}>
             <Box dir="rtl" style={{
                 paddingBottom: 10
             }}>
@@ -96,15 +102,15 @@ const Video: React.FC = () => {
 
             <Table
                 columns={columnsDefinition}
-                data={videos}
+                data={courses}
                 title=""
             />
 
-            <FullModal {...{ open, setOpen, title: `${id === 0 ? 'Cadastrar' : 'Editar'} Videos` ,onHandleClose:fetchData}}>
+            <FullModal {...{ open, setOpen, title: `${id === 0 ? 'Cadastrar' : 'Editar'} Cursos` ,onHandleClose:fetchData}}>
                 <RegisterCourse {...{ id, setId }} />
             </FullModal>
         </Page>
-    );
+    )
 }
 
-export default Video;
+export default Courses

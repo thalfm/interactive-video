@@ -1,5 +1,5 @@
-create database interactive
-    with owner root;
+-- create database interactive
+--     with owner root;
 
 create table usuarios
 (

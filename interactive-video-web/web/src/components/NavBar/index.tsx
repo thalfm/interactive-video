@@ -80,7 +80,7 @@ const NavBar: React.FC = () => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Catálogo de videos
+                        Interactive videos
                     </Typography>
                     <IconButton
                         title="Sair"

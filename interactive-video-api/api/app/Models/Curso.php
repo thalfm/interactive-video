@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @SWG\Definition(
@@ -55,6 +58,9 @@ class Curso extends Model
 {
     use HasFactory;
 
+    const PUBLIC_PATH = 'public' . DIRECTORY_SEPARATOR;
+    const STORAGE_PUBLIC = 'storage' . DIRECTORY_SEPARATOR;
+
     public $table = 'cursos';
 
     const CREATED_AT = 'data_cadastro';
@@ -89,7 +95,7 @@ class Curso extends Model
     public static $rules = [
         'nome_curso'       => 'required|string|max:100',
         'descricao_curso'  => 'required|string|max:2000',
-        'imagem_curso'     => 'required|string|max:200',
+        'imagem_curso'     => 'required|max:1000',
         'ativo'            => 'required|boolean'
     ];
 
@@ -113,5 +119,25 @@ class Curso extends Model
             Video::class,
             'curso_videos'
         );
+    }
+
+    public function setImagemCursoAttribute($value)
+    {
+        if ($value instanceof UploadedFile) {
+            $nomeImagemCurso = md5(date('YmdHis')) . '.' . $value->extension();
+
+            $path = self::PUBLIC_PATH . $nomeImagemCurso;
+
+            Storage::put($path, $value->getContent());
+            $this->attributes['imagem_curso'] = $nomeImagemCurso;
+            return;
+        }
+
+        $this->attributes['imagem_curso'] = $value;
+    }
+
+    public function getImagemCursoAttribute($value)
+    {
+        return getenv('APP_URL') . ':8000/'.  self::STORAGE_PUBLIC . $value;
     }
 }

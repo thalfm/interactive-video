@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @SWG\Definition(
@@ -50,6 +52,9 @@ class Video extends Model
 {
     use HasFactory;
 
+    const PUBLIC_PATH = 'public' . DIRECTORY_SEPARATOR;
+    const STORAGE_PUBLIC = 'storage' . DIRECTORY_SEPARATOR;
+
     public $table = 'videos';
 
     const CREATED_AT = 'data_cadastro';
@@ -85,7 +90,6 @@ class Video extends Model
      */
     public static $rules = [
         'titulo_video' => 'required|string|max:100',
-        'nome_video' => 'required|string|max:100',
         'ativo' => 'required|boolean',
     ];
 
@@ -103,5 +107,25 @@ class Video extends Model
     public function perguntas()
     {
         return $this->belongsToMany(Pergunta::class, 'videos_perguntas');
+    }
+
+    public function setNomeVideoAttribute($value)
+    {
+        if ($value instanceof UploadedFile) {
+            $nomeNomeVideo = md5(date('YmdHis')) . '.' . $value->extension();
+
+            $path = self::PUBLIC_PATH . $nomeNomeVideo;
+
+            Storage::put($path, $value->getContent());
+            $this->attributes['nome_video'] = $nomeNomeVideo;
+            return;
+        }
+
+        $this->attributes['nome_video'] = $value;
+    }
+
+    public function getNomeVideoAttribute($value)
+    {
+        return getenv('APP_URL') . ':8000/'.  self::STORAGE_PUBLIC . $value;
     }
 }

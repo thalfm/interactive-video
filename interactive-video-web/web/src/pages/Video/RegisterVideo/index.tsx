@@ -8,19 +8,11 @@ import UploadFile from "../../../components/UploadFile";
 import FileList from "../../../components/FileList";
 import VideosModel from "../../../models/VideosModel";
 import httpVideosApi from "../../../services/httpVideosApi";
-import httpCoursesApi from "../../../services/httpCoursesApi";
-
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        inputInline: {
-            paddingRight: theme.spacing(2),
-        },
-        marginTop: {
-            marginTop: theme.spacing(2),
-        }
-    }),
-);
+import {useDispatch, useSelector} from "react-redux";
+import {Creators} from '../../../store/upload'
+import SnackbarUpload from "../../../components/SnackbarUpload";
+import io from "socket.io-client";
+import {StateUpload} from "../../../store/upload/types";
 
 const validationSchema = yup.object().shape({
     titulo_video: yup.string()
@@ -28,7 +20,8 @@ const validationSchema = yup.object().shape({
         .required()
 })
 
-interface File {
+interface FileUpload {
+    file?: File
     id: number,
     preview: string,
     name: string,
@@ -39,6 +32,8 @@ interface FormVideoProps {
     id: number,
     setId: Function
 }
+
+const ON_UPLOAD_EVENT = "file-uploaded"
 
 const RegisterVideo: React.FC<FormVideoProps> = (props) => {
 
@@ -53,11 +48,41 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
         validationSchema,
     });
 
-    const [files, setFiles] = useState<File[]>();
+    const dispatch = useDispatch()
+
+    const [files, setFiles] = useState<FileUpload[]>();
     const [idVideo, setIdVideo] = useState(0);
     const [active, setActive] = useState(true);
+    const [clientId, setClientId] = useState<string>();
+    const [total, setTotal] = useState<number>(0);
+
+    const socket = React.useMemo<SocketIOClient.Socket>(
+        () => io("http://0.0.0.0:3003/upload"),
+        []
+    );
+
+    const progress = useSelector<StateUpload, number>(
+        state => {
+            return state.upload.value
+        }
+    )
+
+    React.useEffect(() => {
+        socket.on(ON_UPLOAD_EVENT,(bytesReceived: any) => {
+            dispatch(Creators.progressAction({ value: bytesReceived}))
+        });
+
+        socket.on("connect", () => {
+            console.log(`abriu a conexão: ${socket.id}` );
+            dispatch(Creators.progressAction({ value: 0}))
+            setClientId(socket.id);
+        });
+    }, [socket]);
 
     useEffect(() => {
+        setTotal(0)
+        dispatch(Creators.progressAction({ value: 0}))
+
         if (props.id) {
             const findVideo = async (id: number) : Promise<VideosModel> => {
                 return await httpVideosApi().findBy(id)
@@ -81,15 +106,23 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
 
     async function onSubmit(formData: Record<string, any>, event: any) {
         formData.id = idVideo
-        formData.image = files;
         formData.ativo = active ? 1 : 0
+        snackbar.closeSnackbar('snackbar-upload')
 
-        const video = await httpVideosApi()
+        await httpVideosApi()
             .save(formData)
             .then((response) => {
-                snackbar.enqueueSnackbar('Video salvo com sucesso', {
+                snackbar.enqueueSnackbar('Video salvo com sucesso, aguarde o upload', {
                     variant: 'success'
                 });
+
+                const video = response.data.data
+
+                setIdVideo(video.id_videos as number)
+                props.setId(video.id_videos);
+
+                submitVideo(video)
+
                 return response.data.data;
             })
             .catch((error) => {
@@ -100,9 +133,48 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
                 }
             })
 
-        if (video != undefined && video.id_videos > 0) {
-            props.setId(video.id_videos);
+
+    }
+
+    const submitVideo = (video: VideosModel) => {
+        if (!video.id_videos) {
+            return;
         }
+
+        if (!clientId) {
+            return;
+        }
+
+        if (!files?.length || typeof files === "undefined" || !files[0].file) {
+            return;
+        }
+
+        const params = {
+            id_videos: video.id_videos,
+            nome_video: files[0].file,
+            socket_id: clientId
+        }
+
+        httpVideosApi().upload(params,{
+            config: {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                    ignoreLoader: true
+                }
+            }
+        })
+
+        snackbar.enqueueSnackbar('', {
+            key: 'snackbar-upload',
+            persist: true,
+            anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "right"
+            },
+            content: (key, message) => (
+                <SnackbarUpload id={key} total={total} />
+            )
+        })
     }
 
     const onUploadFiles = (files: any) => {
@@ -112,10 +184,18 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
             preview: URL.createObjectURL(file),
             url: null
         }));
+        const { size } = uploadedFiles.reduce((prev:any, next: any) => ({ size: prev.size + next.file.size }), { size: 0 })
+
+        setTotal(size)
+
+        dispatch(Creators.progressAction({ value: size}))
+
         setFiles(uploadedFiles);
     }
 
     const onDeleteFile = async (name: string) => {
+        snackbar.closeSnackbar('snackbar-upload')
+
         if (files === undefined) {
             return;
         }
@@ -125,7 +205,6 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
 
     return (
         <Container>
-
             <form className={classes.marginTop} onSubmit={handleSubmit(onSubmit)}>
                 <TextField
                     name="titulo_video"
@@ -169,5 +248,16 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
         </Container>
     );
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        inputInline: {
+            paddingRight: theme.spacing(2),
+        },
+        marginTop: {
+            marginTop: theme.spacing(2),
+        }
+    }),
+);
 
 export default RegisterVideo;

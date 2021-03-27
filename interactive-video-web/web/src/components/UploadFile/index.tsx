@@ -19,7 +19,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     }
 
     return (
-        <Dropzone accept={"image/*"} onDropAccepted={props.onUpload}>
+        <Dropzone onDropAccepted={props.onUpload}>
             {
                 ({getRootProps, getInputProps, isDragActive, isDragReject}) => (
                     <DropContainer

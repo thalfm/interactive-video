@@ -78,7 +78,7 @@ create table videos
         constraint videos_pk
             primary key,
     titulo_video varchar(100) not null,
-    nome_video varchar(100) not null,
+    nome_video varchar(100) null,
     ativo boolean default true not null,
     data_cadastro timestamp default CURRENT_TIMESTAMP not null,
     data_atualizacao timestamp

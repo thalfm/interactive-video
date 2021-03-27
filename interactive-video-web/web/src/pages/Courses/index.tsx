@@ -50,7 +50,6 @@ const Courses: React.FC = () => {
             label: 'Opções',
             options: {
                 customBodyRender(value, tableMeta, updateValue) {
-                    console.log(value)
                     return (
                         <>
                             <IconButton onClick={() => handleEdit(value)}>

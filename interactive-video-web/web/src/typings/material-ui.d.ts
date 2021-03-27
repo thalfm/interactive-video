@@ -4,6 +4,7 @@ import  { PaletteOptions, Palette, PaletteColor, PaletteColorOptions } from "@ma
 declare module '@material-ui/core/styles/overrides' {
     interface ComponentNameToClassKey {
         MUIDataTable: any;
+        MuiButton: any;
         MUIDataTableToolbar: any,
         MUIDataTableHeadCell: any,
         MUIDataTableSortLabel: any,

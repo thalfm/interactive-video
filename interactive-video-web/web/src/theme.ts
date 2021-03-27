@@ -30,6 +30,11 @@ const palette: PaletteOptions = {
 const theme = createMuiTheme({
     palette: palette,
     overrides: {
+        MuiButton:{
+          root: {
+              color: (palette!.primary as SimplePaletteColorOptions).contrastText,
+          }
+        },
         MUIDataTable:{
             paper: {
                 boxShadow: "none"

@@ -6,7 +6,6 @@ import Home from "../../pages/Home";
 import Video from "../../pages/Video";
 import Courses from "../../pages/Courses";
 import {Questions} from "../../pages/Questions";
-import Chat from "../../pages/Chat";
 
 
 export const AppRouter: React.FC = () => {
@@ -17,7 +16,6 @@ export const AppRouter: React.FC = () => {
             <Route path="/video" component={Video} />
             <Route path="/course" component={Courses} />
             <Route path="/question" component={Questions} />
-            <Route path="/chat" component={Chat} />
             {/*{*/}
             {/*    routes.map((route, key) => {*/}
             {/*            if (route.requiredAuth && route.path && route.component) {*/}

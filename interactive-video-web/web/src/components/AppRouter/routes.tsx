@@ -3,7 +3,6 @@ import Home from "../../pages/Home";
 import Login from '../../pages/Login';
 import Video from "../../pages/Video";
 import Course from "../../pages/Courses";
-import Chat from "../../pages/Chat";
 import {Questions} from "../../pages/Questions";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import VideocamIcon from '@material-ui/icons/Videocam';
@@ -21,17 +20,6 @@ export interface AppProps extends RouteProps {
 }
 
 let routes: AppProps[] = [
-    {
-        name: 'chat',
-        label: 'Chat',
-        Icon: ChatIcon,
-        path: '/chat',
-        component: Chat,
-        exact: true,
-        menu: true,
-        requiredAuth: false,
-        breadCrumb: true
-    },
     {
         name: 'curso',
         label: 'Cursos',

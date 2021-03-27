@@ -32,12 +32,14 @@ kubectl create -f k8s/rabbitmq/svc.yml
 
 echo -e "${HC}::::::::::::::::::::::::::Create environment API interactive-video::::::::::::::::::::::::::${NC}"
 kubectl delete -f k8s/interactive-video/api/configmap-envs.yml
+kubectl delete -f k8s/interactive-video/api/configmap-phpini.yml
 kubectl delete -f k8s/interactive-video/api/configmap-nginx.yml
 kubectl delete -f k8s/interactive-video/api/deploy.yml
 kubectl delete -f k8s/interactive-video/api/svc.yml
 kubectl delete -f k8s/interactive-video/api/ingress.yml
 
 kubectl create -f k8s/interactive-video/api/configmap-envs.yml
+kubectl create -f k8s/interactive-video/api/configmap-phpini.yml
 kubectl create -f k8s/interactive-video/api/configmap-nginx.yml
 kubectl create -f k8s/interactive-video/api/deploy.yml
 kubectl create -f k8s/interactive-video/api/svc.yml

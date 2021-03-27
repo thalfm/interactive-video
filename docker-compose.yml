@@ -1,4 +1,4 @@
-version: "3.1"
+version: '3.5'
 
 services:
   interactive-video-web:
@@ -27,12 +27,29 @@ services:
     volumes:
       - ./interactive-video-api/api:/opt/api
       - ./interactive-video-api/nginx/default:/etc/nginx/sites-available/default
+      - ./interactive-video-api/php/overrides.ini:/etc/php/8.0/fpm/conf.d/overrides.ini
     ports:
       - 8000:80
     networks:
       - interactive-video
     env_file:
       - .env
+
+  interactive-upload-socket:
+    build:
+      dockerfile: Dockerfile
+      context: ./interactive-upload-socket
+      target: development
+    image: thalfm/interactive-upload-socket
+    container_name: interactive-upload-socket
+    volumes:
+      - ./interactive-upload-socket:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./interactive-upload-socket/.env
+    ports:
+    - 3003:3003
+    command: tail -f /dev/null
 
   interactive-video-pgsql:
     image: postgres:13.1

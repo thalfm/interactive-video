@@ -27,6 +27,12 @@ spec:
             items:
               - key: env
                 path: .env
+        - name: phpini-api-config
+          configMap:
+            name: interactive-video-api-phpini
+            items:
+              - key: phpini
+                path: overrides.ini
       containers:
         - name: interactive-video-api
           image: "thalfm/interactive-video-api"
@@ -36,6 +42,8 @@ spec:
             - name: envs-api-config
               subPath: .env
               mountPath: /opt/api/.env
+            - name: phpini-api-config
+              mountPath: "/etc/php/8.0/fpm/conf.d"
           imagePullPolicy: Always
           ports:
             - name: http

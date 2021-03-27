@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: interactive-video-api-phpini
+data:
+   phpini: |
+       post_max_size=50000M
+       upload_max_filesize=50000M

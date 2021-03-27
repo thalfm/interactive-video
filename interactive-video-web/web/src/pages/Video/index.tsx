@@ -24,6 +24,7 @@ const Video: React.FC = () => {
     const fetchData = async () => {
         const videosResult = await httpVideosApi().all()
 
+        setId(0)
         setVideos(videosResult)
     }
 

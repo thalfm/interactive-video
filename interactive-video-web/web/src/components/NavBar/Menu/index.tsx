@@ -1,14 +1,11 @@
 import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
 import clsx from "clsx";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import Drawer from '@material-ui/core/Drawer';
 import {makeStyles} from "@material-ui/core/styles";
 import routes from "../../AppRouter/routes";
-import { useHistory } from 'react-router-dom';
+import AppMenuItem from "./AppMenuItem";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -50,11 +47,6 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = (props) => {
     const classes = useStyles();
-    const history = useHistory();
-
-    const navigateTo = (path: string) => {
-        history.push(path);
-    }
 
     return (
         <Drawer
@@ -65,35 +57,17 @@ const Menu: React.FC<MenuProps> = (props) => {
             open={props.open}
         >
             <div className={classes.toolbarIcon}>
-
             </div>
             <Divider/>
             <List>
                 {
-                    routes.map((route, key) => {
-                        if (!route.menu) {
+                    routes.map((item, index) => {
+                        if (!item.menu) {
                             return false;
                         }
 
                         return (
-                            <ListItem
-                                button
-                                key={key}
-                                onClick={(route.path ? () => navigateTo(route.path as string) : () => {})}
-                            >
-                                <div className={classes.iconDrawer}>
-                                    { route.icon && (
-                                        <Icon
-                                            color="primary"
-                                            fontSize={"large"}
-                                        >
-                                            {route.icon}
-                                        </Icon>
-                                    )}
-                                </div>
-
-                                <ListItemText primary={route.label}/>
-                            </ListItem>
+                            <AppMenuItem {...item} key={index} />
                         )
                     })
                 }

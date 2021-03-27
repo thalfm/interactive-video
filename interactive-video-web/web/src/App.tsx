@@ -8,6 +8,8 @@ import Snackbar from "./components/Snackbar";
 import StoreProvider from './components/Store/StoreProvider';
 import LoadingProvider from './components/Loading/LoadingProvider';
 import BlockUI from './components/BlockUI';
+import {Provider} from 'react-redux';
+import store from './store'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -22,20 +24,23 @@ function App() {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            <MuiThemeProvider theme={theme}>
-                <LoadingProvider>
-                    <BlockUI />
-                    <Snackbar>
-                        <StoreProvider>
-                            <BrowserRouter>
-                                <AppRouter />
-                            </BrowserRouter>
-                        </StoreProvider>
-                    </Snackbar>
-                </LoadingProvider>
-            </MuiThemeProvider>
-        </div>
+        <Provider store={store}>
+            <div className={classes.root}>
+                <MuiThemeProvider theme={theme}>
+                    <LoadingProvider>
+                        <BlockUI />
+                        <Snackbar>
+                            <StoreProvider>
+                                <BrowserRouter>
+                                    <AppRouter />
+                                </BrowserRouter>
+                            </StoreProvider>
+                        </Snackbar>
+                    </LoadingProvider>
+                </MuiThemeProvider>
+            </div>
+        </Provider>
+
     );
 }
 

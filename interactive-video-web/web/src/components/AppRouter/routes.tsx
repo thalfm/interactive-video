@@ -3,23 +3,39 @@ import Home from "../../pages/Home";
 import Login from '../../pages/Login';
 import Video from "../../pages/Video";
 import Course from "../../pages/Courses";
+import Chat from "../../pages/Chat";
 import {Questions} from "../../pages/Questions";
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import {Chat as ChatIcon} from "@material-ui/icons";
 
-interface AppProps extends RouteProps {
+export interface AppProps extends RouteProps {
     name: string,
     label: string,
     menu: boolean,
-    icon?: string,
+    Icon?: any,
     requiredAuth: boolean,
     breadCrumb: boolean,
-    list ?: AppProps[]
+    items ?: AppProps[]
 }
 
 let routes: AppProps[] = [
     {
+        name: 'chat',
+        label: 'Chat',
+        Icon: ChatIcon,
+        path: '/chat',
+        component: Chat,
+        exact: true,
+        menu: true,
+        requiredAuth: false,
+        breadCrumb: true
+    },
+    {
         name: 'curso',
         label: 'Cursos',
-        icon: 'video_library',
+        Icon: VideoLibraryIcon,
         path: '/course',
         component: Course,
         exact: true,
@@ -30,40 +46,27 @@ let routes: AppProps[] = [
     {
         name: 'video',
         label: 'Videos',
-        icon: 'videocam',
-        exact: true,
+        Icon: VideocamIcon,
         menu: true,
-        path: '/video',
-        component: Video,
         requiredAuth: false,
-        breadCrumb: true,
-        // list: [
-        //     {
-        //         name: 'video',
-        //         label: 'Lista',
-        //         path: '/video',
-        //         exact: true,
-        //         menu: true,
-        //         component: Video,
-        //         requiredAuth: false,
-        //         breadCrumb: true,
-        //     },
-        //     {
-        //         name: 'vicular_pergunta',
-        //         label: 'Vincular pergunta',
-        //         path: '/veido-pergunta',
-        //         exact: true,
-        //         menu: true,
-        //         component: Video,
-        //         requiredAuth: false,
-        //         breadCrumb: true,
-        //     }
-        // ]
+        breadCrumb: false,
+        items: [
+            {
+                name: 'video',
+                label: 'Lista',
+                path: '/video/lista',
+                exact: true,
+                menu: true,
+                component: Video,
+                requiredAuth: false,
+                breadCrumb: true,
+            }
+        ]
     },
     {
         name: 'pergunta',
         label: 'Perguntas',
-        icon: 'question_answer',
+        Icon: QuestionAnswerIcon,
         path: '/question',
         component: Questions,
         exact: true,
@@ -84,7 +87,7 @@ let routes: AppProps[] = [
     {
         name: 'home',
         label: 'Home',
-        icon: 'dashboard',
+        Icon: 'dashboard',
         path: '/',
         component: Home,
         exact: true,

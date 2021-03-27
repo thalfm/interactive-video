@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import LoadingContext from './LoadingContext'
 import api from '../../services/api';
+// @ts-ignore
+import {omit} from 'lodash'
 
 const LoadingProvider = (props: any) => {
     const [loading, setLoading] = useState(false);
@@ -10,10 +12,13 @@ const LoadingProvider = (props: any) => {
         let isSubscribed = true;
 
         api.interceptors.request.use(async config => {
-            if (isSubscribed) {
+            if (isSubscribed && !config.headers.hasOwnProperty('ignoreLoader')) {
                 setLoading(true);
                 setCountRequest((prevCountRequest => prevCountRequest + 1));
             }
+
+            config.headers = omit(config.headers, 'ignoreLoader')
+
             return config;
         });
 
@@ -35,7 +40,7 @@ const LoadingProvider = (props: any) => {
     }, [true])
 
     useEffect(() => {
-        if (countRequest === 0) {
+        if (countRequest <= 0) {
             setLoading(false);
         }
     }, [countRequest])

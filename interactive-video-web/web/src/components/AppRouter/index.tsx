@@ -2,36 +2,68 @@ import React, {ComponentType, FunctionComponent, useContext} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 import routes from "./routes";
 import StoreContext from '../Store/StoreContext';
+import Home from "../../pages/Home";
+import Video from "../../pages/Video";
+import Courses from "../../pages/Courses";
+import {Questions} from "../../pages/Questions";
+import Chat from "../../pages/Chat";
 
 
 export const AppRouter: React.FC = () => {
 
     return (
         <Switch>
-            {
-                routes.map((route, key) => {
+            <Route path="/" exact component={Home} />
+            <Route path="/video" component={Video} />
+            <Route path="/course" component={Courses} />
+            <Route path="/question" component={Questions} />
+            <Route path="/chat" component={Chat} />
+            {/*{*/}
+            {/*    routes.map((route, key) => {*/}
+            {/*            if (route.requiredAuth && route.path && route.component) {*/}
+            {/*                return (*/}
+            {/*                    <PrivateRoute*/}
+            {/*                        key={key}*/}
+            {/*                        path={route.path}*/}
+            {/*                        component={route.component as FunctionComponent}*/}
+            {/*                    />*/}
+            {/*                )*/}
+            {/*            }*/}
 
-                        if (route.requiredAuth) {
-                            return (
-                                <PrivateRoute
-                                    key={key}
-                                    path={route.path}
-                                    component={route.component as FunctionComponent}
-                                />
-                            )
-                        }
+            {/*            if (route.path && route.component) {*/}
+            {/*                return (*/}
+            {/*                    <PublicRoute*/}
+            {/*                        key={key}*/}
+            {/*                        path={route.path}*/}
+            {/*                        component={route.component as FunctionComponent}*/}
+            {/*                    />*/}
+            {/*                )*/}
+            {/*            }*/}
 
-                        return (
-                            <PublicRoute
-                                key={key}
-                                path={route.path}
-                                component={route.component as FunctionComponent}
-                            />
-                        )
+            {/*            route.items?.map((r, k) => {*/}
+            {/*                if (r.requiredAuth && r.path && r.component) {*/}
+            {/*                    return (*/}
+            {/*                        <PrivateRoute*/}
+            {/*                            key={k}*/}
+            {/*                            path={r.path}*/}
+            {/*                            component={r.component as FunctionComponent}*/}
+            {/*                        />*/}
+            {/*                    )*/}
+            {/*                }*/}
 
-                    }
-                )
-            }
+            {/*                if (r.path && r.component) {*/}
+            {/*                    return (*/}
+            {/*                        <PublicRoute*/}
+            {/*                            key={k}*/}
+            {/*                            path={r.path}*/}
+            {/*                            component={r.component as FunctionComponent}*/}
+            {/*                        />*/}
+            {/*                    )*/}
+            {/*                }*/}
+            {/*            })*/}
+            {/*        }*/}
+            {/*    )*/}
+            {/*}*/}
         </Switch>
     );
 };

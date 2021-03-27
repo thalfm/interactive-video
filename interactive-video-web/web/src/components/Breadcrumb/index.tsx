@@ -6,7 +6,7 @@ import Link, { LinkProps } from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Location from 'history';
-import routes from "../AppRouter/routes";
+import routes, {AppProps} from "../AppRouter/routes";
 import RouteParser from 'route-parser'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import Icon from "@material-ui/core/Icon";
@@ -17,7 +17,7 @@ interface LinkRouterProps extends LinkProps {
 }
 const LinkRouter = (props: LinkRouterProps) => <Link {...props} component={RouterLink as any} />;
 
-const breadcrumbNameMap: { [key: string]: {label: string, icon?: string} } = {};
+const breadcrumbNameMap: { [key: string]: {label: string, Icon?: string} } = {};
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,12 +46,19 @@ export const Breadcrumb: React.FC = () => {
     const classes = useStyles();
 
     useEffect(() => {
-        if (routes) { 
-            routes.forEach(route => {
-                if (route.breadCrumb === true) {
-                    breadcrumbNameMap[route.path as string] = {label: route.label, icon: route.icon}
+        if (routes) {
+
+            const makeBreadcrumb = (route: AppProps) => {
+                if (route.items) {
+                    route.items.forEach((route) => makeBreadcrumb(route))
                 }
-            });
+
+                if (route.breadCrumb === true) {
+                    breadcrumbNameMap[route.path as string] = {label: route.label, Icon: route.Icon}
+                }
+            }
+
+            routes.forEach(route => makeBreadcrumb(route));
         }
     }, [])
 
@@ -88,24 +95,10 @@ export const Breadcrumb: React.FC = () => {
 
                     return last ? (
                         <Typography color="textPrimary" key={to}>
-                            <Icon
-                                className={classes.iconRouter}
-                                color="primary"
-                                fontSize={"small"}
-                            >
-                                {breadcrumbNameMap[route].icon}
-                            </Icon>
                             {breadcrumbNameMap[route].label}
                         </Typography>
                     ) : (
                         <LinkRouter color="inherit" to={to} key={to} className={classes.linkRouter}>
-                            <Icon
-                                className={classes.iconRouter}
-                                color="primary"
-                                fontSize={"small"}
-                            >
-                                {breadcrumbNameMap[route].icon}
-                            </Icon>
                             {breadcrumbNameMap[route].label}
                         </LinkRouter>
                     );

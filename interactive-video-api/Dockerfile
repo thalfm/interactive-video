@@ -12,6 +12,7 @@ RUN apt-get update && \
        php-redis \
        php-xdebug \
        php${PHP_VERSION}-bcmath \
+       php${PHP_VERSION}-sockets \
        php${PHP_VERSION}-gd \
        php-imagick \
        php${PHP_VERSION}-intl \

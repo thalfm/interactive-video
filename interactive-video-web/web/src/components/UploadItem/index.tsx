@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {ListItem, ListItemIcon, ListItemText, Tooltip, Typography} from "@material-ui/core";
 import MovieIcon from '@material-ui/icons/Movie';
 import {makeStyles} from "@material-ui/core/styles";
@@ -12,7 +12,7 @@ interface UploadItemProps {
 
 const UploadItem: React.FC<UploadItemProps> = (props) => {
 
-    const [textProgress, setTextProgress] = useState('Em preogresso')
+    const [textProgress, setTextProgress] = useState('Em progresso')
     const classes = useStyles()
     const {total} = props
     const progress = useSelector<StateUpload, number>(
@@ -21,8 +21,8 @@ const UploadItem: React.FC<UploadItemProps> = (props) => {
         }
     )
 
-    useMemo(() => {
-        if (((total - progress) * 100 / total) === 100) {
+    useEffect(() => {
+        if ((progress * 100 / total) === 100) {
             setTextProgress('Concluído')
         }
     }, [progress])

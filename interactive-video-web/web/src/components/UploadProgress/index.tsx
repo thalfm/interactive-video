@@ -29,7 +29,7 @@ const UploadProgress: React.FC<UploadProgress> = (props) => {
                 <CircularProgress
                     className={classes.progress}
                     variant={"determinate"}
-                    value={parseFloat(((total - progress) * 100 / total).toFixed(0))}
+                    value={parseFloat((progress * 100/ total).toFixed(0))}
                 />
             </div>
 

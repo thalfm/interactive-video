@@ -61,15 +61,10 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
         []
     );
 
-    const progress = useSelector<StateUpload, number>(
-        state => {
-            return state.upload.value
-        }
-    )
-
     React.useEffect(() => {
-        socket.on(ON_UPLOAD_EVENT,(bytesReceived: any) => {
-            dispatch(Creators.progressAction({ value: bytesReceived}))
+        socket.on(ON_UPLOAD_EVENT,(progress: any) => {
+            console.log(`progresso index: ${progress}`)
+            dispatch(Creators.progressAction({ value: progress}))
         });
 
         socket.on("connect", () => {
@@ -187,8 +182,6 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
         const { size } = uploadedFiles.reduce((prev:any, next: any) => ({ size: prev.size + next.file.size }), { size: 0 })
 
         setTotal(size)
-
-        dispatch(Creators.progressAction({ value: size}))
 
         setFiles(uploadedFiles);
     }

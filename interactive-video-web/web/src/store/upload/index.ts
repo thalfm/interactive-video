@@ -24,7 +24,6 @@ export const reducer = createReducer<Typings.State, Typings.Actions>(INITIAL_STA
 function progress(state = INITIAL_STATE, action: Typings.ProgressAction): Typings.Progress {
     let value = action.payload.value
 
-console.log(`redux: ${value}`)
     return {
         ...state,
         ...{

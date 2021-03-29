@@ -63,7 +63,6 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
 
     React.useEffect(() => {
         socket.on(ON_UPLOAD_EVENT,(progress: any) => {
-            console.log(`progresso index: ${progress}`)
             dispatch(Creators.progressAction({ value: progress}))
         });
 

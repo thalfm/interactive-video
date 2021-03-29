@@ -43,13 +43,15 @@ services:
     image: thalfm/interactive-upload-socket
     container_name: interactive-upload-socket
     volumes:
-      - ./interactive-upload-socket:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./interactive-upload-socket:/home/node/app
+      - /home/node/app/node_modules
     env_file:
       - ./interactive-upload-socket/.env
     ports:
     - 3003:3003
-    command: tail -f /dev/null
+    entrypoint: nodemon -L
+    networks:
+      - interactive-video
 
   interactive-video-pgsql:
     image: postgres:13.1
@@ -65,6 +67,7 @@ services:
       - 5432:5432
     networks:
       - interactive-video
+
   interactive-video-rabbitmq:
     image: 'rabbitmq:3.8-management-alpine'
     hostname: rabbitmq
@@ -78,6 +81,49 @@ services:
       - RABBITMQ_DEFAULT_PASS=admin
     networks:
       - interactive-video
+
+  interactive-video-catalog-api:
+    build:
+      dockerfile: Dockerfile
+      context: ./interactive-video-catalog-api
+      target: development
+    image: thalfm/interactive-video-catalog-api
+    container_name: interactive-video-catalog-api
+    volumes:
+      - ./interactive-video-catalog-api:/home/node/app
+      - /usr/src/app/node_modules
+    environment:
+      - HOST=0.0.0.0
+    ports:
+      - 3004:3000
+    entrypoint: nodemon -L
+    networks:
+      - interactive-video
+
+  interactive-video-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    container_name: interactive-video-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - node.name=interactive-video-elasticsearch
+    volumes:
+      - ./.elasticdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - interactive-video
+
+  interactive-video-kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    container_name: interactive-video-kibana
+    environment:
+      ELASTICSEARCH_URL: http://interactive-video-elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://interactive-video-elasticsearch:9200"]'
+    ports:
+      - 5601:5601
+    networks:
+      - interactive-video
+
 networks:
   interactive-video:
     driver: bridge

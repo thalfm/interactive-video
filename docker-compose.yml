@@ -16,6 +16,21 @@ services:
     networks:
       - interactive-video
 
+  interactive-video-catalog-web:
+    build:
+      dockerfile: Dockerfile
+      context: ./interactive-video-catalog-web
+    image: thalfm/interactive-video-catalog-web
+    container_name: interactive-video-catalog-web
+    volumes:
+      - ./interactive-video-catalog-web/web:/opt/web
+      - ./interactive-video-catalog-web/nginx/default:/etc/nginx/sites-available/default
+    ports:
+      - 8002:80
+      - 3001:3000
+    networks:
+      - interactive-video
+
   interactive-video-api:
     build:
       dockerfile: Dockerfile

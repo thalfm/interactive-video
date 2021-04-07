@@ -1,4 +1,5 @@
 .idea
 .database/*
 .rabbitmq/*
+.elasticdata/*
 .env

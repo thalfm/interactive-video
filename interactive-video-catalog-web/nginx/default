@@ -1,0 +1,18 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    client_max_body_size 50000M;
+
+    root /opt/web/build;
+    index index.html;
+
+    server_name _;
+
+    access_log /var/log/nginx/interactive-video-catalog-web.access.log;
+    error_log /var/log/nginx/interactive-video-catalog-web.error.log;
+
+    location / {
+        try_files $uri /index.html;
+      }
+}

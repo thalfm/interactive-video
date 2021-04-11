@@ -118,15 +118,14 @@ const FormAnswer: React.FC<FormAnswerProps> = (props) => {
 
     }
 
-    useEffect(() => {
-        fetchData();
-    }, [])
-
     const fetchData = async () => {
         const answers = await httpAnswersApi().all(props.id);
         setRespostas(answers)
     }
 
+    useEffect(() => {
+        fetchData();
+    }, [fetchData])
 
     const handleEdit = async (value: any) => {
         const answer = await httpAnswersApi().findBy(props.id, value[3])

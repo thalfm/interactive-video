@@ -19,16 +19,15 @@ export const Questions = () => {
     const [questions, setQuestions] = useState<QuestionsModel[]>([]);
 
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-
     const fetchData = async () => {
         const questionsResult = await httpQuestionsApi().all()
 
         setQuestions(questionsResult)
     }
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     const columnsDefinition: MUIDataTableColumn[] = [
         {

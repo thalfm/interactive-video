@@ -1,13 +1,11 @@
 import {RouteProps} from 'react-router-dom'
 import Home from "../../pages/Home";
-import Login from '../../pages/Login';
 import Video from "../../pages/Video";
 import Course from "../../pages/Courses";
 import {Questions} from "../../pages/Questions";
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import {Chat as ChatIcon} from "@material-ui/icons";
 
 export interface AppProps extends RouteProps {
     name: string,
@@ -59,16 +57,6 @@ let routes: AppProps[] = [
         component: Questions,
         exact: true,
         menu: true,
-        requiredAuth: false,
-        breadCrumb: true
-    },
-    {
-        name: 'login',
-        label: 'Login',
-        path: '/admin',
-        component: Login,
-        exact: true,
-        menu: false,
         requiredAuth: false,
         breadCrumb: true
     },

@@ -25,7 +25,7 @@ const httpQuestionsApi = () => {
                 })
         },
         save: async (params: any) => {
-            if (params.id != undefined && params.id > 0) {
+            if (params.id) {
                 return api.post(`${PATH}/${params.id}?_method=PUT`, params);
             }
 

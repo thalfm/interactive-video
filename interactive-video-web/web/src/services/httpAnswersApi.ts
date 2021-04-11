@@ -25,7 +25,7 @@ const httpAnswersApi = () => {
                 })
         },
         save: async (idPergunta: number, params: any) => {
-            if (params.id != undefined && params.id > 0) {
+            if (params.id) {
                 return api.put(`perguntas/${idPergunta}/${PATH}/${params.id}`, params);
             }
 

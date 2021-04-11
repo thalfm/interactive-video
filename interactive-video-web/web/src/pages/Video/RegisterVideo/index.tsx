@@ -8,11 +8,10 @@ import UploadFile from "../../../components/UploadFile";
 import FileList from "../../../components/FileList";
 import VideosModel from "../../../models/VideosModel";
 import httpVideosApi from "../../../services/httpVideosApi";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Creators} from '../../../store/upload'
 import SnackbarUpload from "../../../components/SnackbarUpload";
 import io from "socket.io-client";
-import {StateUpload} from "../../../store/upload/types";
 
 const validationSchema = yup.object().shape({
     titulo_video: yup.string()
@@ -71,7 +70,7 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
             dispatch(Creators.progressAction({ value: 0}))
             setClientId(socket.id);
         });
-    }, [socket]);
+    }, [socket, dispatch]);
 
     useEffect(() => {
         setTotal(0)
@@ -95,7 +94,7 @@ const RegisterVideo: React.FC<FormVideoProps> = (props) => {
                     }])
                 });
         }
-    }, [])
+    }, [dispatch, props.id, reset])
 
 
     async function onSubmit(formData: Record<string, any>, event: any) {

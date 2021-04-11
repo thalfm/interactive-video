@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,10 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppSharpIcon from '@material-ui/icons/ExitToAppSharp';
 import Menu from "./Menu";
-import StoreContext from '../../components/Store/StoreContext';
-import {TOKEN_KEY} from "../../services/auth";
 
 const drawerWidth = 240;
 
@@ -54,16 +51,10 @@ const useStyles = makeStyles((theme) => ({
 const NavBar: React.FC = () => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const {setToken} = useContext(StoreContext);
 
     const handleDrawerOpen = () => {
         setOpen(!open);
     };
-    const logout = () => {
-        setToken(null);
-        localStorage.removeItem(TOKEN_KEY)
-
-    }
 
     return (
         <React.Fragment>
@@ -82,13 +73,6 @@ const NavBar: React.FC = () => {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Interactive videos
                     </Typography>
-                    <IconButton
-                        title="Sair"
-                        color="inherit"
-                        onClick={logout}
-                    >
-                        <ExitToAppSharpIcon/>
-                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Menu open={open}/>

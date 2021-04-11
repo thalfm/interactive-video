@@ -26,7 +26,7 @@ const httpVideosApi = () => {
                 })
         },
         save: async (params: any, options?: { http?: { usePost: boolean }, config?: AxiosRequestConfig }): Promise<{ data: { data: VideosModel } }> => {
-            if (params.id != undefined && params.id > 0) {
+            if (params.id) {
                 return api.put(`${PATH}/${params.id}`, params, options?.config as AxiosRequestConfig);
             }
 

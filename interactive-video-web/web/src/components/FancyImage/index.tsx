@@ -1,14 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';import {
-    createMuiTheme, 
-    MuiThemeProvider, 
-    Backdrop, 
-    makeStyles,
-    Theme,
-    createStyles
-} from "@material-ui/core";
+import React from 'react';
+import {Backdrop, createMuiTheme, createStyles, makeStyles, MuiThemeProvider, Theme} from "@material-ui/core";
 import theme from "../../theme";
 
-import { Preview, Frame } from "./styles";
+import {Frame, Preview} from "./styles";
 
 const localTheme = createMuiTheme({
     palette: {

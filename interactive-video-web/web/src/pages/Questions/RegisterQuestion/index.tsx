@@ -74,7 +74,7 @@ const RegisterQuestion: React.FC<RegisterQuestionProps> = (props) => {
 
     useEffect(() => {
         setId(props.id)
-    }, [])
+    }, [props.id])
 
     return (
         <div className={classes.root}>

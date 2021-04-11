@@ -84,7 +84,7 @@ const RegisterCourse: React.FC<FormCourseProps> = (props) => {
                     }])
                 });
         }
-    }, [])
+    }, [props.id])
 
     async function onSubmit(formData: Record<string, any>, event: any) {
         formData.id = idCourse
@@ -107,7 +107,7 @@ const RegisterCourse: React.FC<FormCourseProps> = (props) => {
                 }
             })
 
-        if (course != undefined && course.id_cursos > 0) {
+        if (typeof course !== "undefined" && course.id_cursos > 0) {
             props.setId(course.id_cursos);
         }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ListItem, ListItemIcon, ListItemText, Tooltip, Typography} from "@material-ui/core";
 import MovieIcon from '@material-ui/icons/Movie';
 import {makeStyles} from "@material-ui/core/styles";
@@ -25,7 +25,7 @@ const UploadItem: React.FC<UploadItemProps> = (props) => {
         if ((progress * 100 / total) === 100) {
             setTextProgress('Concluído')
         }
-    }, [progress])
+    }, [progress, total])
 
     return (
         <>

@@ -31,11 +31,17 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::apiResources([
-        'usuarios' => App\Http\Controllers\API\UsuarioAPIController::class,
-        'cursos' => App\Http\Controllers\API\CursoAPIController::class,
-        'videos'    => App\Http\Controllers\API\VideoAPIController::class,
-        'perguntas' => App\Http\Controllers\API\PerguntaAPIController::class,
-        'respostas' => App\Http\Controllers\API\RespostaAPIController::class,
-        'perguntas.respostas' => App\Http\Controllers\API\PerguntaRespostasController::class
+        'usuarios'            => App\Http\Controllers\API\UsuarioAPIController::class,
+        'cursos'              => App\Http\Controllers\API\CursoAPIController::class,
+        'videos'              => App\Http\Controllers\API\VideoAPIController::class,
+        'perguntas'           => App\Http\Controllers\API\PerguntaAPIController::class,
+        'respostas'           => App\Http\Controllers\API\RespostaAPIController::class,
+        'perguntas.respostas' => App\Http\Controllers\API\PerguntaRespostasController::class,
     ]);
+
+    Route::apiResource('videos.perguntas', App\Http\Controllers\API\VideoPerguntasAPIController::class)
+        ->only('index', 'store');
+
+    Route::apiResource('cursos.videos', App\Http\Controllers\API\CursoVideosAPIController::class)
+        ->only('index', 'store', 'destroy');
 });

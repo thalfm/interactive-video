@@ -7,20 +7,16 @@
         "laravel"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:InfyOmLabs/swaggervel.git"
-        }
-    ],
     "require": {
         "php": "^7.3|^8.0",
         "bschmitt/laravel-amqp": "^2.0",
+        "chelout/laravel-relationship-events": "^1.4",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "league/flysystem-aws-s3-v3": "~1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -29,9 +25,7 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
         "infyomlabs/laravel-generator": "8.0.x-dev",
-        "doctrine/dbal": "~2.3",
-        "appointer/swaggervel": "dev-master",
-        "infyomlabs/swagger-generator": "dev-master"
+        "doctrine/dbal": "~2.3"
     },
     "config": {
         "optimize-autoloader": true,

@@ -21,7 +21,8 @@ class CursoResource extends JsonResource
             'imagem_curso'     => $this->imagem_curso,
             'ativo'            => $this->ativo,
             'data_cadastro'    => $this->data_cadastro,
-            'data_atualizacao' => $this->data_atualizacao
+            'data_atualizacao' => $this->data_atualizacao,
+            'videos'           => $this->whenLoaded('videos', VideoResource::collection($this->videos))
         ];
     }
 }

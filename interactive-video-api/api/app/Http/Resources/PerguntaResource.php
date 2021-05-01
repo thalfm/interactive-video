@@ -19,7 +19,8 @@ class PerguntaResource extends JsonResource
             'descricao_pergunta' => $this->descricao_pergunta,
             'ativo'              => $this->ativo,
             'data_cadastro'      => $this->data_cadastro,
-            'data_atualizacao'   => $this->data_atualizacao
+            'data_atualizacao'   => $this->data_atualizacao,
+            'aparecer_em'        => $this->when($this->pivot , fn() => $this->pivot->aparecer_em)
         ];
     }
 }

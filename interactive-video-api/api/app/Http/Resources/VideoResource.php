@@ -20,7 +20,8 @@ class VideoResource extends JsonResource
             'nome_video'       => $this->nome_video,
             'ativo'            => $this->ativo,
             'data_cadastro'    => $this->data_cadastro,
-            'data_atualizacao' => $this->data_atualizacao
+            'data_atualizacao' => $this->data_atualizacao,
+            'perguntas'        => $this->whenLoaded('perguntas', PerguntaResource::collection($this->perguntas))
         ];
     }
 }

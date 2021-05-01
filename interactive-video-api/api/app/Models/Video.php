@@ -106,26 +106,11 @@ class Video extends Model
      **/
     public function perguntas()
     {
-        return $this->belongsToMany(Pergunta::class, 'videos_perguntas');
-    }
-
-    public function setNomeVideoAttribute($value)
-    {
-        if ($value instanceof UploadedFile) {
-            $nomeNomeVideo = md5(date('YmdHis')) . '.' . $value->extension();
-
-            $path = self::PUBLIC_PATH . $nomeNomeVideo;
-
-            Storage::put($path, $value->getContent());
-            $this->attributes['nome_video'] = $nomeNomeVideo;
-            return;
-        }
-
-        $this->attributes['nome_video'] = $value;
-    }
-
-    public function getNomeVideoAttribute($value)
-    {
-        return getenv('APP_URL') . ':8000/'.  self::STORAGE_PUBLIC . $value;
+        return $this->belongsToMany(
+            Pergunta::class,
+            'videos_perguntas',
+            'id_videos',
+            'id_perguntas'
+        )->withPivot('aparecer_em');
     }
 }

@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use Chelout\RelationshipEvents\Concerns\HasBelongsToManyEvents;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -56,7 +55,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Curso extends Model
 {
-    use HasFactory;
+    use HasFactory, HasBelongsToManyEvents;
 
     const PUBLIC_PATH = 'public' . DIRECTORY_SEPARATOR;
     const STORAGE_PUBLIC = 'storage' . DIRECTORY_SEPARATOR;
@@ -99,6 +98,8 @@ class Curso extends Model
         'ativo'            => 'required|boolean'
     ];
 
+    protected $observables = ['belongsToManyAttached', 'belongsToManyDetached'];
+
     /**
      * @return BelongsToMany
      **/
@@ -117,7 +118,9 @@ class Curso extends Model
     {
         return $this->belongsToMany(
             Video::class,
-            'curso_videos'
+            'curso_videos',
+            'id_cursos',
+            'id_videos'
         );
     }
 
@@ -128,7 +131,7 @@ class Curso extends Model
 
             $path = self::PUBLIC_PATH . $nomeImagemCurso;
 
-            Storage::put($path, $value->getContent());
+            Storage::disk('s3')->put($path, $value->getContent(), 'public');
             $this->attributes['imagem_curso'] = $nomeImagemCurso;
             return;
         }
@@ -138,6 +141,7 @@ class Curso extends Model
 
     public function getImagemCursoAttribute($value)
     {
-        return getenv('APP_URL') . ':8000/'.  self::STORAGE_PUBLIC . $value;
+        $path = self::PUBLIC_PATH . $value;
+        return Storage::disk('s3')->url($path);
     }
 }

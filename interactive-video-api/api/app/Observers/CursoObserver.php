@@ -2,28 +2,25 @@
 
 namespace App\Observers;
 
-use App\Models\Curso;
+use App\Http\Resources\CursoResource;
 use Bschmitt\Amqp\Message;
 
 class CursoObserver
 {
-    public function created(Curso $curso)
+    public function belongsToManyAttached($relation, $curso, $ids)
     {
-        $message = new Message($curso->toJson());
+        $json = (new CursoResource($curso))->toJson();
+
+        $message = new Message($json);
 
         \Amqp::publish('model.curso.created', $message);
     }
 
-    public function updated(Curso $curso)
+    public function belongsToManyDetached($relation, $curso, $ids)
     {
-        $message = new Message($curso->toJson());
+        $json = (new CursoResource($curso))->toJson();
 
-        \Amqp::publish('model.curso.updated', $message);
-    }
-
-    public function deleted(Curso $curso)
-    {
-        $message = new Message($curso->toJson());
+        $message = new Message($json);
 
         \Amqp::publish('model.curso.deleted', $message);
     }

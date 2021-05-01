@@ -193,12 +193,13 @@ create unique index cursovideos_idvideos_idcursos_uindex
 
 create table videos_perguntas
 (
-    id_videos integer
+    id_videos integer not null
         constraint videosperguntas_videos_idvideos_fk
             references videos,
-    id_perguntas integer
+    id_perguntas integer not null
         constraint videosperguntas_perguntas_idperguntas_fk
-            references perguntas
+            references perguntas,
+    aparecer_em time not null
 );
 
 alter table videos_perguntas owner to root;

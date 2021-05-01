@@ -19,17 +19,6 @@ import {Edit, Delete} from '@material-ui/icons';
 import httpAnswersApi from "../../../../services/httpAnswersApi";
 import AnswersModel from "../../../../models/AnswersModel";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        inputInline: {
-            paddingRight: theme.spacing(2),
-        },
-        buttonPadding: {
-            paddingBottom: theme.spacing(2),
-        }
-    }),
-);
-
 const validationSchema = yup.object().shape({
     descricao_resposta: yup.string()
         .label("Descrição")
@@ -125,7 +114,7 @@ const FormAnswer: React.FC<FormAnswerProps> = (props) => {
 
     useEffect(() => {
         fetchData();
-    }, [fetchData])
+    }, [])
 
     const handleEdit = async (value: any) => {
         const answer = await httpAnswersApi().findBy(props.id, value[3])
@@ -200,4 +189,16 @@ const FormAnswer: React.FC<FormAnswerProps> = (props) => {
         </Container>
     );
 };
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        inputInline: {
+            paddingRight: theme.spacing(2),
+        },
+        buttonPadding: {
+            paddingBottom: theme.spacing(2),
+        }
+    }),
+);
+
 export default FormAnswer;

@@ -33,21 +33,12 @@ let routes: AppProps[] = [
         name: 'video',
         label: 'Videos',
         Icon: VideocamIcon,
+        path: '/video',
+        component: Video,
+        exact: true,
         menu: true,
         requiredAuth: false,
-        breadCrumb: false,
-        items: [
-            {
-                name: 'video',
-                label: 'Lista',
-                path: '/video/lista',
-                exact: true,
-                menu: true,
-                component: Video,
-                requiredAuth: false,
-                breadCrumb: true,
-            }
-        ]
+        breadCrumb: true,
     },
     {
         name: 'pergunta',

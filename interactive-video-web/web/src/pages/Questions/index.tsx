@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { MUIDataTableColumn } from 'mui-datatables';
 import { Box, Fab, IconButton } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,12 +12,9 @@ import Table from "../../components/Table";
 import httpQuestionsApi from "../../services/httpQuestionsApi";
 import QuestionsModel from "../../models/QuestionsModel";
 
-
-
 export const Questions = () => {
     const [id, setId] = useState(0);
     const [questions, setQuestions] = useState<QuestionsModel[]>([]);
-
 
     const fetchData = async () => {
         const questionsResult = await httpQuestionsApi().all()
@@ -25,9 +22,13 @@ export const Questions = () => {
         setQuestions(questionsResult)
     }
 
-    useEffect(() => {
+    const fetchDataMemoizedCallback = useCallback( () => {
         fetchData();
-    }, [fetchData]);
+    },[fetchData]);
+
+    useEffect(() => {
+        fetchDataMemoizedCallback();
+    }, []);
 
     const columnsDefinition: MUIDataTableColumn[] = [
         {

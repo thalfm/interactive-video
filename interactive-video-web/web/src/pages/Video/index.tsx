@@ -9,11 +9,14 @@ import {MUIDataTableColumn} from "mui-datatables";
 import {BadgeNo, BadgeYes} from "../../components/Badge";
 import EditIcon from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
+import SyncAlt from "@material-ui/icons/SyncAlt";
 import httpVideosApi from "../../services/httpVideosApi";
 import VideosModel from "../../models/VideosModel";
+import RelationQuestion from "./RelationQuestions";
 
 const Video: React.FC = () => {
     const [open, setOpen] = useState(false);
+    const [openRelation, setOpenRelation] = useState(false);
     const [id, setId] = useState(0);
     const [videos, setVideos] = useState<VideosModel[]>([])
 
@@ -49,10 +52,13 @@ const Video: React.FC = () => {
                 customBodyRender(value, tableMeta, updateValue) {
                     return (
                         <>
-                            <IconButton onClick={() => handleEdit(value)}>
+                            <IconButton title={"Relacionar perguntas"} onClick={() => relationQuestions(value)}>
+                                <SyncAlt />
+                            </IconButton>
+                            <IconButton title={'Editar'} onClick={() => handleEdit(value)}>
                                 <EditIcon />
                             </IconButton>
-                            <IconButton onClick={() => handleDelete(value)}>
+                            <IconButton title={'Remover'} onClick={() => handleDelete(value)}>
                                 <Delete />
                             </IconButton>
                         </>
@@ -70,6 +76,11 @@ const Video: React.FC = () => {
     const handleEdit = (value: number) => {
         setId(value)
         setOpen(true);
+    }
+
+    const relationQuestions = (value: number) => {
+        setId(value)
+        setOpenRelation(true);
     }
 
     const handleDelete = async (value: number) => {
@@ -103,6 +114,10 @@ const Video: React.FC = () => {
 
             <FullModal {...{ open, setOpen, title: `${id === 0 ? 'Cadastrar' : 'Editar'} Videos` ,onHandleClose:fetchData}}>
                 <RegisterCourse {...{ id, setId }} />
+            </FullModal>
+
+            <FullModal {...{ open: openRelation, setOpen: setOpenRelation, title: `Relacionar Videos e perguntas` }}>
+                <RelationQuestion {...{ id, setId }} />
             </FullModal>
         </Page>
     );

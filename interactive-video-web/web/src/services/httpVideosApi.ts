@@ -1,6 +1,6 @@
 import api from "./api";
 import VideosModel from "../models/VideosModel";
-import {AxiosRequestConfig} from "axios";
+import {AxiosRequestConfig, AxiosResponse} from "axios";
 
 const PATH = 'videos'
 
@@ -8,7 +8,7 @@ const httpVideosApi = () => {
 
     return {
         all: async () => {
-            return api.get(PATH)
+            return api.get<AxiosResponse<VideosModel[]>>(PATH)
                 .then((response): VideosModel[] => {
                     return response.data.data
                 })
@@ -54,7 +54,13 @@ const httpVideosApi = () => {
         },
         destroy: async (id: number) => {
             return api.delete(`${PATH}/${id}?is_active=0`);
-        }
+        },
+        relateQuestion: async (id: number, data: {id_perguntas: number, aparecer_em: string}) => {
+            return api.post(`${PATH}/${id}/perguntas`, data);
+        },
+        getRelatedQuestions: async (id: number): Promise<AxiosResponse<{data: VideosModel}>> => {
+            return await api.get(`${PATH}/${id}/perguntas`);
+        },
     }
 }
 

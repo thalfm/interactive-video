@@ -53,7 +53,7 @@ const FormQuestion: React.FC<FormQuestionProps> = (props) => {
         const question = await httpQuestionsApi()
             .save(data)
             .then((response) => {
-                snackbar.enqueueSnackbar('Curso salvo com sucesso', {
+                snackbar.enqueueSnackbar('Pergunta salvo com sucesso', {
                     variant: 'success'
                 });
                 return response.data.data;

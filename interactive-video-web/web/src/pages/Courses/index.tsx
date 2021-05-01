@@ -11,9 +11,12 @@ import {MUIDataTableColumn} from "mui-datatables"
 import RegisterCourse from "./RegisterCourse"
 import httpCoursesApi from "../../services/httpCoursesApi"
 import CoursesModel from "../../models/CoursesModel"
+import SyncAlt from "@material-ui/icons/SyncAlt";
+import RelationVideos from "./RelationVideos";
 
 const Courses: React.FC = () => {
     const [open, setOpen] = useState(false)
+    const [openRelation, setOpenRelation] = useState(false);
     const [id, setId] = useState(0)
     const [courses, setCourses] = useState<CoursesModel[]>([])
 
@@ -25,6 +28,11 @@ const Courses: React.FC = () => {
         const coursesResult = await httpCoursesApi().all()
 
         setCourses(coursesResult)
+    }
+
+    const relationVideos = (value: number) => {
+        setId(value)
+        setOpenRelation(true);
     }
 
     const columnsDefinition: MUIDataTableColumn[] = [
@@ -52,6 +60,9 @@ const Courses: React.FC = () => {
                 customBodyRender(value, tableMeta, updateValue) {
                     return (
                         <>
+                            <IconButton title={"Relacionar videos"} onClick={() => relationVideos(value)}>
+                                <SyncAlt />
+                            </IconButton>
                             <IconButton onClick={() => handleEdit(value)}>
                                 <EditIcon />
                             </IconButton>
@@ -107,6 +118,10 @@ const Courses: React.FC = () => {
 
             <FullModal {...{ open, setOpen, title: `${id === 0 ? 'Cadastrar' : 'Editar'} Cursos` ,onHandleClose:fetchData}}>
                 <RegisterCourse {...{ id, setId }} />
+            </FullModal>
+
+            <FullModal {...{ open: openRelation, setOpen: setOpenRelation, title: `Relacionar Cursos e videos` }}>
+                <RelationVideos {...{ id, setId }} />
             </FullModal>
         </Page>
     )

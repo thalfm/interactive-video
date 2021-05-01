@@ -1,5 +1,6 @@
 import api from "./api";
 import CoursesModel from "../models/CoursesModel";
+import { AxiosResponse } from "axios";
 
 const PATH = 'cursos'
 
@@ -48,7 +49,13 @@ const httpCoursesApi = () => {
         },
         destroy: async(id:number) => {
             return api.delete(`${PATH}/${id}?is_active=0`);
-        }
+        },
+        relateVideos: async (id: number, data: {id_videos: number}) => {
+            return api.post(`${PATH}/${id}/videos`, data);
+        },
+        getRelatedQVideos: async (id: number): Promise<AxiosResponse<{data: CoursesModel}>> => {
+            return await api.get(`${PATH}/${id}/videos`);
+        },
     }
 }
 

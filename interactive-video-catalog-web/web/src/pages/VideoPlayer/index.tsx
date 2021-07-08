@@ -20,11 +20,11 @@ const videoData: Video[] = [{
     display_options_at: 3,
     options: [
         {
-            option: 'Lindinho',
+            option: 'Errado',
             correct: false
         },
         {
-            option: 'Lindão',
+            option: 'Certa',
             correct: true
         }
     ]
@@ -36,7 +36,7 @@ const videoData: Video[] = [{
     display_options_at: 2,
     options: [
         {
-            option: 'continuar',
+            option: 'continuar no 2',
             correct: false
         },
         {

@@ -2,11 +2,14 @@ import React from "react";
 import Logo from "./Logo";
 import Search from "./Search";
 
-const Header: React.FC = () => {
+type SearchProps = {
+    onSearch?:  (event: KeyboardEvent | any) => void
+}
+const Header: React.FC<SearchProps> = ({ onSearch }) => {
     return (
         <header>
             <Logo />
-            <Search />
+            <Search onSearch={onSearch} />
         </header>
     )
 }

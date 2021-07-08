@@ -12,7 +12,9 @@ const config = {
     pingTimeout: process.env.ELASTIC_SEARCH_PING_TIMEOUT
   },
   mappingProperties: {
-
+    docType: {
+      type: "keyword"
+    }
   }
 };
 

@@ -19,7 +19,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     }
 
     return (
-        <Dropzone onDropAccepted={props.onUpload}>
+        <Dropzone accept={".mp4"} onDropAccepted={props.onUpload}>
             {
                 ({getRootProps, getInputProps, isDragActive, isDragReject}) => (
                     <DropContainer

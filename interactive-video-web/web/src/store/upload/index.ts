@@ -1,5 +1,5 @@
 import * as Typings from "./types"
-import {createActions, createReducer} from "reduxsauce"
+import { createActions, createReducer } from "reduxsauce"
 
 export const INITIAL_STATE: Typings.State = {
     value: 0

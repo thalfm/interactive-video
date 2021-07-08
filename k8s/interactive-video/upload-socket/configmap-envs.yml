@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: interactive-upload-socket-envs
+data:
+   env: |
+       APP_PORT=3003
+       SOCKET_IO_ALLOW_ORIGINS=http://localhost:8080
+       CHOKIDAR_USEPOLLING=true
+
+       POSTGRES_HOST=interactive-video-pgsql
+       POSTGRES_PORT=5432
+       POSTGRES_DATABASE=interactive
+       POSTGRES_USER=root
+       POSTGRES_PASSWORD=123456
+

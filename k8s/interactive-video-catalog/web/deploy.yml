@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "interactive-video-catalog-web"
+  labels:
+    app: "interactive-video-catalog-web"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "interactive-video-catalog-web"
+  template:
+    metadata:
+      labels:
+        app: "interactive-video-catalog-web"
+    spec:
+      volumes:
+        - name: nginx-web-proxy-config
+          configMap:
+            name: interactive-video-catalog-web-nginx
+            items:
+              - key: default
+                path: default
+      containers:
+        - name: "interactive-video-catalog-web"
+          image: "thalfm/interactive-video-catalog-web"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-web-proxy-config
+              mountPath: /etc/nginx/sites-available

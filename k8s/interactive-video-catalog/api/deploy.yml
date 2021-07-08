@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interactive-video-catalog-api
+  labels:
+    app: interactive-video-catalog-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interactive-video-catalog-api
+  template:
+    metadata:
+      labels:
+        app: interactive-video-catalog-api
+    spec:
+      volumes:
+        - name: envs-api-config
+          configMap:
+            name: interactive-video-catalog-api-envs
+            items:
+              - key: env
+                path: .env
+      containers:
+        - name: interactive-video-catalog-api
+          image: "thalfm/interactive-video-catalog-api"
+          volumeMounts:
+            - name: envs-api-config
+              subPath: .env
+              mountPath: /usr/src/app/.env
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: RABBITMQ_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-pass
+                  key: password
+
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2"

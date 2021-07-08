@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interactive-upload-socket
+  labels:
+    app: interactive-upload-socket
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interactive-upload-socket
+  template:
+    metadata:
+      labels:
+        app: interactive-upload-socket
+    spec:
+      volumes:
+        - name: envs-api-upload-config
+          configMap:
+            name: interactive-upload-socket-envs
+            items:
+              - key: env
+                path: .env
+      containers:
+        - name: interactive-upload-socket
+          image: "thalfm/interactive-upload-socket"
+          volumeMounts:
+            - name: envs-api-upload-config
+              subPath: .env
+              mountPath: /home/node/app/.env
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgsql-pass
+                  key: password
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-access
+                  key:  key-id
+            - name: AWS_SECRET_ACESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-access
+                  key: secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2"

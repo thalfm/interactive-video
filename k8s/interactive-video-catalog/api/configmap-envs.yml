@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: interactive-video-catalog-api-envs
+data:
+   env: |
+       ELASTIC_SEARCH_HOST=http://interactive-video-elasticsearch:9200
+       ELASTIC_SEARCH_REQUEST_TIMEOUT=30000
+       ELASTIC_SEARCH_PING_TIMEOUT=3000
+       RABBITMQ_HOST=interactive-video-rabbitmq
+       RABBITMQ_USER=admin
